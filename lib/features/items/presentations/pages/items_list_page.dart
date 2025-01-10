@@ -5,6 +5,7 @@ import 'package:mon_marche_domestique/core/style.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_state.dart';
+import 'package:mon_marche_domestique/features/items/presentations/widgets/custome_appbar.dart';
 import 'package:mon_marche_domestique/features/items/presentations/widgets/item_list_tile.dart';
 
 class ItemListPage extends StatefulWidget {
@@ -24,12 +25,9 @@ class _ItemListPageState extends State<ItemListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Mon marche domestique',),
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: (){},
-        ),
+      appBar: const CustomeAppBar(
+        title: 'Mon marche domestique',
+        icon: Icons.menu,   
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
