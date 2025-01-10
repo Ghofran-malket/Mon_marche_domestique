@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mon_marche_domestique/core/style.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
+import 'package:mon_marche_domestique/features/items/presentations/widgets/custom_text_field.dart';
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custome_appbar.dart';
 
 class AddItemPage extends StatelessWidget {
@@ -18,21 +20,16 @@ class AddItemPage extends StatelessWidget {
         icon: Icons.arrow_back_ios,   
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              controller: markController,
-              decoration: InputDecoration(labelText: 'mark'),
-            ),
-            TextField(
-              controller: quantityController,
-              decoration: InputDecoration(labelText: 'Quantity'),
-            ),
+            Text("Add an item to your kitchen",style: bigTitle,),
+            SizedBox(height: 20,),
+            CustomTextField(controller: nameController,labelText: 'item name',),
+            CustomTextField(controller: markController,labelText: 'mark',),
+            CustomTextField(controller: quantityController,labelText: 'quantity',),
+            
             ElevatedButton(
               onPressed: () {
                 final name = nameController.text;
