@@ -2,9 +2,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
+import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_state.dart';
 
-class ItemListPage extends StatelessWidget {
+class ItemListPage extends StatefulWidget {
+
+  @override
+  State<ItemListPage> createState() => _ItemListPageState();
+}
+
+class _ItemListPageState extends State<ItemListPage> {
+
+  @override
+  void initState() {
+    
+    super.initState();
+    context.read<ItemBloc>().add(GetItemListEvent());
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

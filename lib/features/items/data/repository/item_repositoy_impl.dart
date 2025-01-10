@@ -3,10 +3,10 @@ import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
 import 'package:mon_marche_domestique/features/items/domain/repository/item_repository.dart';
 
 class ItemRepositoryImpl implements ItemRepository {
-  final List<Item> _items = [];  // Simple in-memory storage for this example
+  final List<Item> _items = [Item(name:"Riz",mark:"Chetoura",quantity:"2")];  // Simple in-memory storage for this example
 
   @override
-  Future<List<Item>> getItems() async {
+  List<Item> getItems() {
     return _items;
   }
 

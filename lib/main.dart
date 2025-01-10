@@ -1,39 +1,43 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:mon_marche_domestique/features/items/presentations/pages/items_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mon_marche_domestique/features/items/data/repository/item_repositoy_impl.dart';
+import 'package:mon_marche_domestique/features/items/domain/use_cases/add_item.dart';
+import 'package:mon_marche_domestique/features/items/domain/use_cases/get_items.dart';
+import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
+import 'package:mon_marche_domestique/features/items/presentations/pages/add_item_page.dart';
+import 'package:mon_marche_domestique/features/items/presentations/pages/items_list_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  final itemRepository = ItemRepositoryImpl();
+  final getItems = GetItems(itemRepository);
+  final addItem = AddItem(itemRepository);
+
+  runApp(MyApp(
+    getItems: getItems,
+    addItem: addItem,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GetItems getItems;
+  final AddItem addItem;
 
-  // This widget is the root of your application.
+  MyApp({required this.getItems, required this.addItem});
+
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+      title: 'Flutter Clean Architecture',
+      home: BlocProvider(
+        create: (context) => ItemBloc(getItems: getItems, addItem: addItem),
+        child: ItemListPage(),
       ),
-      home: const ItemsPage(),
+      routes: {
+        '/add': (context) => AddItemPage(),
+      },
     );
   }
 }
-

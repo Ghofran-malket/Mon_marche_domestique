@@ -10,25 +10,35 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
   final GetItems getItems;
   final AddItem addItem;
 
-  ItemBloc({required this.getItems, required this.addItem}) : super(ItemLoadingState());
+  ItemBloc({required this.getItems, required this.addItem}) : super(ItemLoadingState()) {
+    // Register the handler for GetItemListEvent using on<Event>
+    on<GetItemListEvent>((event, emit) async {
+      // Yield ItemLoadingState while the items are being fetched
+      emit(ItemLoadingState());
 
-  
-  Stream<ItemState> mapEventToState(ItemEvent event) async* {
-    if (event is GetItemListEvent) {
-      yield ItemLoadingState();
       try {
+        // Fetch the items using the GetItems use case
         final items = await getItems();
-        yield ItemLoadedState(items);
+        // On success, yield the ItemLoadedState with the list of items
+        emit(ItemLoadedState(items));
       } catch (e) {
-        yield ItemErrorState(e.toString());
+        // On error, yield the ItemErrorState with an error message
+        emit(ItemErrorState('Failed to load items: $e'));
       }
-    } else if (event is AddItemEvent) {
+    });
+    on<AddItemEvent>((event, emit) async {
+      // Yield ItemLoadingState while the items are being fetched
+      emit(ItemLoadingState());
+
       try {
         await addItem(Item(name: event.name, mark: event.mark, quantity: event.quantity));
-        add(GetItemListEvent());  // Refresh the list
+
+      
       } catch (e) {
-        yield ItemErrorState(e.toString());
+        // On error, yield the ItemErrorState with an error message
+        emit(ItemErrorState('Failed to load items: $e'));
       }
-    }
+    });
+
   }
 }
