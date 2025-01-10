@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Clean Architecture',
+      debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create: (context) => ItemBloc(getItems: getItems, addItem: addItem),
         child: ItemListPage(),

@@ -21,7 +21,7 @@ class ItemListTile extends StatelessWidget {
                   boxShadow:[ 
                     BoxShadow(
                       blurRadius: 5.0,
-                      color: Colors.red[200]!
+                      color: Colors.indigo[200]!
                     )
                   ], 
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
