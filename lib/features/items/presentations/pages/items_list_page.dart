@@ -60,6 +60,12 @@ class _ItemListPageState extends State<ItemListPage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: (){
+          Navigator.pushNamed(context, '/add');
+        },
+      ),
     );
   }
 }
