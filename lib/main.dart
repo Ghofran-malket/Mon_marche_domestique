@@ -29,16 +29,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Clean Architecture',
-      debugShowCheckedModeBanner: false,
-      home: BlocProvider(
+    return BlocProvider(
         create: (context) => ItemBloc(getItems: getItems, addItem: addItem),
-        child: ItemListPage(),
-      ),
-      routes: {
-        '/add': (context) => AddItemPage(),
-      },
-    );
+        child: MaterialApp(
+          title: 'Flutter Clean Architecture',
+          debugShowCheckedModeBanner: false,
+          home: ItemListPage(),
+          routes: {
+            '/add': (context) => AddItemPage(),
+          },
+        ));
   }
 }
