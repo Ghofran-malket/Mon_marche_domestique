@@ -7,12 +7,19 @@ import 'package:mon_marche_domestique/features/items/presentations/widgets/custo
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custom_text_field.dart';
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custome_appbar.dart';
 
-class AddItemPage extends StatelessWidget {
+class AddItemPage extends StatefulWidget {
+  @override
+  State<AddItemPage> createState() => _AddItemPageState();
+}
+
+class _AddItemPageState extends State<AddItemPage> {
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController markController = TextEditingController();
+
   final TextEditingController quantityController = TextEditingController();
 
-
+  bool empty = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +39,22 @@ class AddItemPage extends StatelessWidget {
               CustomTextField(controller: nameController,labelText: 'item name',),
               CustomTextField(controller: markController,labelText: 'mark',),
               CustomTextField(controller: quantityController,labelText: 'quantity',),
+              empty ? Text("These fields should be filled..", style:TextStyle(color:Colors.red[400])): Container(),
               CustomPrimaryButton(
                 label:"Add item",
                 onPressed: (){
                   final name = nameController.text;
                   final mark = markController.text;
                   final quantity = quantityController.text;
-                  context.read<ItemBloc>().add(AddItemEvent(name: name, mark: mark, quantity: quantity));
-                  Navigator.pop(context);
+                  if (name == "" || mark == "" || quantity == ""){
+                    setState(() {
+                      empty = true;
+                    });
+                  }else{
+                    context.read<ItemBloc>().add(AddItemEvent(name: name, mark: mark, quantity: quantity));
+                    Navigator.pop(context);
+                  }
+                  
                 }
               ),
               
