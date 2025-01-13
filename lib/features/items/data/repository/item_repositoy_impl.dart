@@ -28,7 +28,7 @@ class ItemRepositoryImpl implements ItemRepository {
     bool exist= false;
     int index = 0;
     for(int i=0; i< _items.length; i++){
-      if(_items[i].name.toLowerCase() == item.name.toLowerCase()){
+      if(_items[i].name.toLowerCase() == item.name.toLowerCase() && _items[i].mark.toLowerCase() == item.mark.toLowerCase()){
         exist = true;
         index = i;
         break;
