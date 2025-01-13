@@ -23,26 +23,28 @@ class AddItemPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Add an item to your kitchen",style: bigTitle,),
-            SizedBox(height: 20,),
-            CustomTextField(controller: nameController,labelText: 'item name',),
-            CustomTextField(controller: markController,labelText: 'mark',),
-            CustomTextField(controller: quantityController,labelText: 'quantity',),
-            CustomPrimaryButton(
-              label:"Add item",
-              onPressed: (){
-                final name = nameController.text;
-                final mark = markController.text;
-                final quantity = quantityController.text;
-                context.read<ItemBloc>().add(AddItemEvent(name: name, mark: mark, quantity: quantity));
-                Navigator.pop(context);
-              }
-            ),
-            
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Add an item to your kitchen",style: bigTitle,),
+              SizedBox(height: 20,),
+              CustomTextField(controller: nameController,labelText: 'item name',),
+              CustomTextField(controller: markController,labelText: 'mark',),
+              CustomTextField(controller: quantityController,labelText: 'quantity',),
+              CustomPrimaryButton(
+                label:"Add item",
+                onPressed: (){
+                  final name = nameController.text;
+                  final mark = markController.text;
+                  final quantity = quantityController.text;
+                  context.read<ItemBloc>().add(AddItemEvent(name: name, mark: mark, quantity: quantity));
+                  Navigator.pop(context);
+                }
+              ),
+              
+            ],
+          ),
         ),
       ),
     );
