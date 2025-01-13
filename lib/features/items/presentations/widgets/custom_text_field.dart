@@ -19,8 +19,12 @@ class CustomTextField extends StatelessWidget {
         ),
         child: TextField(
           controller: controller,
+          keyboardType: (labelText == 'quantity') ? TextInputType.number: TextInputType.text,
+          maxLength: (labelText == 'quantity') ? 2 : 20,
+          showCursor: false,
           decoration: InputDecoration(
               labelText: labelText,
+              counterText: "",
               border: InputBorder.none,
               labelStyle: TextStyle(color: Colors.indigo[200]!),
               constraints: const BoxConstraints(maxHeight: 50)),

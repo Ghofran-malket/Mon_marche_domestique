@@ -19,7 +19,24 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
-  Future<void> addItem(Item item) async {
+  void addItem(Item item) {
     _items.add(item);
+  }
+
+  @override
+  bool checkForItem(Item item) {
+    bool exist= false;
+    int index = 0;
+    for(int i=0; i< _items.length; i++){
+      if(_items[i].name.toLowerCase() == item.name.toLowerCase()){
+        exist = true;
+        index = i;
+        break;
+      }
+    }
+    if (exist){
+      _items[index].quantity = (int.parse(_items[index].quantity) + int.parse(item.quantity)).toString();
+    }
+    return exist;
   }
 }

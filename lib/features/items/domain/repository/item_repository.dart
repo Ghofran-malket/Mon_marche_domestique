@@ -5,5 +5,7 @@ abstract class ItemRepository {
   List<Item> getItems();
 
   // Method to add a new item
-  Future<void> addItem(Item item);
+  void addItem(Item item);
+
+  bool checkForItem(Item item);
 }

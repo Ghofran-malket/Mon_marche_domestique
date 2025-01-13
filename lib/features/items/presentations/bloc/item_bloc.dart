@@ -18,7 +18,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
       try {
         // Fetch the items using the GetItems use case
-        final items = await getItems();
+        final items = getItems();
         // On success, yield the ItemLoadedState with the list of items
         emit(ItemLoadedState(items));
       } catch (e) {
@@ -31,9 +31,9 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       emit(ItemLoadingState());
 
       try {
-        await addItem(Item(name: event.name, mark: event.mark, quantity: event.quantity));
-
-      
+        addItem(Item(name: event.name, mark: event.mark, quantity: event.quantity));
+        final items = getItems();
+        emit(ItemLoadedState(items));
       } catch (e) {
         // On error, yield the ItemErrorState with an error message
         emit(ItemErrorState('Failed to load items: $e'));
