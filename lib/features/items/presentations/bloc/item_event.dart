@@ -18,3 +18,9 @@ class IncreaseItemsQuantityEvent extends ItemEvent {
 
   IncreaseItemsQuantityEvent({required this.item});
 }
+
+class MinusItemsQuantityEvent extends ItemEvent {
+  final Item item;
+
+  MinusItemsQuantityEvent({required this.item});
+}

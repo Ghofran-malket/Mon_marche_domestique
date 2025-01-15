@@ -52,7 +52,12 @@ class ItemListTile extends StatelessWidget {
                         ),
                         
                         Text("Quantity: $itemQuantity"),
-                        
+                        IconButton(
+                          onPressed:(){
+                            context.read<ItemBloc>().add(MinusItemsQuantityEvent(item:Item(name: itemName, mark: itemMark, quantity: itemQuantity)));
+                          },
+                          icon: Icon(Icons.remove_circle,color: Colors.indigo[600],)
+                        ),
                       ],
                     )
                   ],

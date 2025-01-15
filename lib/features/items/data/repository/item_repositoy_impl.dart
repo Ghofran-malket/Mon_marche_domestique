@@ -50,4 +50,12 @@ class ItemRepositoryImpl implements ItemRepository {
     return _items.indexWhere((item) => item.name == name);
   }
 
+  @override
+  void decreaseQuantity(Item item){
+    int index = findIndexById(item.name);
+    if(int.parse(item.quantity) > 0){
+      _items[index].quantity = (int.parse(item.quantity) - 1 ).toString();
+    }
+  }
+
 }

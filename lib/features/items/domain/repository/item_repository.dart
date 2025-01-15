@@ -10,4 +10,6 @@ abstract class ItemRepository {
   bool checkForItem(Item item);
 
   void increseQuantity(Item item);
+
+  void decreaseQuantity(Item item);
 }
