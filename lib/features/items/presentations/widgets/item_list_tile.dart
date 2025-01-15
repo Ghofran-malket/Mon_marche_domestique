@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
+import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
+import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
 
 class ItemListTile extends StatelessWidget {
   String itemName;
@@ -38,7 +42,19 @@ class ItemListTile extends StatelessWidget {
                         Text("Mark $itemMark")
                       ],
                     ),
-                    Text("Quantity: $itemQuantity")
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed:(){
+                            context.read<ItemBloc>().add(IncreaseItemsQuantityEvent(item:Item(name: itemName, mark: itemMark, quantity: itemQuantity)));
+                          },
+                          icon: Icon(Icons.add_circle,color: Colors.indigo[600],)
+                        ),
+                        
+                        Text("Quantity: $itemQuantity"),
+                        
+                      ],
+                    )
                   ],
                 ),
               

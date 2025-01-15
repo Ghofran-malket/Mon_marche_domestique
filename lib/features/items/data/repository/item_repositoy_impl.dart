@@ -39,4 +39,15 @@ class ItemRepositoryImpl implements ItemRepository {
     }
     return exist;
   }
+
+  @override
+  void increseQuantity(Item item){
+    int index = findIndexById(item.name);
+    _items[index].quantity = (int.parse(item.quantity) + 1 ).toString();
+  }
+
+  int findIndexById(String name) {
+    return _items.indexWhere((item) => item.name == name);
+  }
+
 }
