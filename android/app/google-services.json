@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "634914964316",
+    "project_id": "mon-marche-domestique",
+    "storage_bucket": "mon-marche-domestique.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634914964316:android:2e22bce618015cc0ad3799",
+        "android_client_info": {
+          "package_name": "com.example.mon_marche_domestique"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv5OF05GHpn0H23JgQmO3qHUQDcuARFYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
