@@ -17,6 +17,12 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool valid = true;
+  bool emailValid(String email){
+    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -39,6 +45,7 @@ class _SignInPageState extends State<SignInPage> {
                 },
               ),
               CustomTextField(controller: emailController, labelText: 'email'),
+              valid ? Container() : Text("This email format is not valid..", style:TextStyle(color:Colors.red[600])),
               CustomTextField(controller: passwordController, labelText: 'password'),
                 CustomPrimaryButton(
                   label:"Check",
@@ -49,8 +56,13 @@ class _SignInPageState extends State<SignInPage> {
                 CustomPrimaryButton(label: "Sign up", onPressed: (){
                   final email = emailController.text;
                   final password = passwordController.text;
-                  
-                  context.read<AuthBloc>().add(SignUpEvent(email: email, password: password ));
+                  if(emailValid(email)){
+                    context.read<AuthBloc>().add(SignUpEvent(email: email, password: password ));
+                  }else{
+                    setState(() {
+                      valid = false;
+                    });
+                  }
                    
                 })
                 
