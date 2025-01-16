@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mon_marche_domestique/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/check_user_state.dart';
+import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_up.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/pages/sign_in_page.dart';
 import 'firebase_options.dart';
@@ -24,6 +25,7 @@ void main() async {
   final increaseQuantity = IncreaseItemsQuantity(itemRepository);
   final decreaseQuantity = DecreaseItemsQuantity(itemRepository);
   final checkUserState = CheckUserState(authRepo);
+  final signUp = SignUp(authRepo);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -34,6 +36,7 @@ void main() async {
     increaseQuantity: increaseQuantity,
     decreaseItemsQuantity : decreaseQuantity,
     checkUserState : checkUserState,
+    signUp : signUp
   ));
 }
 
@@ -43,8 +46,9 @@ class MyApp extends StatelessWidget {
   final IncreaseItemsQuantity increaseQuantity;
   final DecreaseItemsQuantity decreaseItemsQuantity;
   final CheckUserState checkUserState;
-
-  MyApp({required this.getItems, required this.addItem, required this.increaseQuantity, required this.decreaseItemsQuantity, required this.checkUserState});
+  final SignUp signUp;
+  MyApp({required this.getItems, required this.addItem, required this.increaseQuantity, 
+  required this.decreaseItemsQuantity, required this.checkUserState, required this.signUp});
 
 
 
@@ -54,7 +58,7 @@ class MyApp extends StatelessWidget {
         create: (context) => ItemBloc(getItems: getItems, addItem: addItem, increaseItemsQuantity: increaseQuantity,
          decreaseItemsQuantity: decreaseItemsQuantity,),
         child: BlocProvider(
-          create: (context) => AuthBloc(checkUserState: checkUserState),
+          create: (context) => AuthBloc(checkUserState: checkUserState, signUp: signUp),
           child: MaterialApp(
             title: 'Flutter Clean Architecture',
             debugShowCheckedModeBanner: false,

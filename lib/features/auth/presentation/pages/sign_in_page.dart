@@ -4,6 +4,7 @@ import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state.dart';
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custom_pimary_button.dart';
+import 'package:mon_marche_domestique/features/items/presentations/widgets/custom_text_field.dart';
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custome_appbar.dart';
 
 class SignInPage extends StatefulWidget {
@@ -12,6 +13,9 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +32,27 @@ class _SignInPageState extends State<SignInPage> {
               children: [
                 BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
-                  if (state is AuthStateChangeState) {
-                    return Center(child: Text("User state change"));
+                  if (state is AuthSuccess) {
+                    return Center(child: Text("Signed up"));
                   }
                   return Container();
                 },
               ),
+              CustomTextField(controller: emailController, labelText: 'email'),
+              CustomTextField(controller: passwordController, labelText: 'password'),
                 CustomPrimaryButton(
                   label:"Check",
                   onPressed: (){
                     context.read<AuthBloc>().add(AuthStateChangeEvent());
                   }
                 ),
+                CustomPrimaryButton(label: "Sign up", onPressed: (){
+                  final email = emailController.text;
+                  final password = passwordController.text;
+                  
+                  context.read<AuthBloc>().add(SignUpEvent(email: email, password: password ));
+                   
+                })
                 
               ],
             ),
