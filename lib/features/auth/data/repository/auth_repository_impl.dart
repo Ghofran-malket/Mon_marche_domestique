@@ -28,4 +28,13 @@ class AuthRepositoryImpl implements AuthRepository {
     );
     return userCredential.user!;
   }
+
+  @override
+  Future<User> signIn({required String email, required String password}) async{
+    final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return userCredential.user!;
+  }
 }
