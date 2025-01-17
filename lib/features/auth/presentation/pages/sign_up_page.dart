@@ -7,27 +7,21 @@ import 'package:mon_marche_domestique/features/items/presentations/widgets/custo
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custom_text_field.dart';
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custome_appbar.dart';
 
-class SignInPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  bool valid = true;
-  bool emailValid(String email){
-    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(email);
-  }
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
         appBar: const CustomeAppBar(
-          title: 'Check user state',
+          title: 'Register',
           icon: Icons.arrow_back_ios,   
         ),
         body: Padding(
@@ -36,36 +30,34 @@ class _SignInPageState extends State<SignInPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
-                  if (state is AuthSuccess) {
-                    return Center(child: Text("Signed up"));
-                  }
-                  return Container();
-                },
-              ),
+               
               CustomTextField(controller: emailController, labelText: 'email'),
-              valid ? Container() : Text("This email format is not valid..", style:TextStyle(color:Colors.red[600])),
               CustomTextField(controller: passwordController, labelText: 'password'),
-                CustomPrimaryButton(
-                  label:"Check",
+              CustomPrimaryButton(label:"Check",
+                onPressed: (){
+                  context.read<AuthBloc>().add(AuthStateChangeEvent());
+                }
+              ),
+
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Sign up success")));
+                  }
+                  if (state is AuthFailure){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.errorMessage),backgroundColor: Colors.red[600],));
+                      emailController.clear();
+                      passwordController.clear();
+                  }
+                },
+                child: CustomPrimaryButton(
+                  label: "Sign up",
                   onPressed: (){
-                    context.read<AuthBloc>().add(AuthStateChangeEvent());
-                  }
-                ),
-                CustomPrimaryButton(label: "Sign up", onPressed: (){
-                  final email = emailController.text;
-                  final password = passwordController.text;
-                  if(emailValid(email)){
-                    context.read<AuthBloc>().add(SignUpEvent(email: email, password: password ));
-                  }else{
-                    setState(() {
-                      valid = false;
-                    });
-                  }
-                   
-                })
-                
+                    context.read<AuthBloc>().add(SignUpEvent(email: emailController.text, password: passwordController.text ));
+                  })
+              ), 
               ],
             ),
           ),

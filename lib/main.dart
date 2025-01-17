@@ -4,7 +4,7 @@ import 'package:mon_marche_domestique/features/auth/data/repository/auth_reposit
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/check_user_state.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_up.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:mon_marche_domestique/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:mon_marche_domestique/features/auth/presentation/pages/sign_up_page.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             title: 'Flutter Clean Architecture',
             debugShowCheckedModeBanner: false,
-            home: SignInPage(),
+            home: SignUpPage(),
             routes: {
               '/add': (context) => AddItemPage(),
             },
