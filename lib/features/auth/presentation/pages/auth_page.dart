@@ -20,6 +20,13 @@ class _AuthPageState extends State<AuthPage> {
   bool _isSignUp = false;
 
   @override
+  void dispose() {
+    emailController.clear();
+    passwordController.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return  Scaffold(
         appBar: CustomeAppBar(
@@ -30,17 +37,18 @@ class _AuthPageState extends State<AuthPage> {
           listener: (context, state) {
             if (state is AuthSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: _isSignUp ? Text("Sign up success"): Text("Sign In success")));
+                SnackBar(content: _isSignUp ? Text("Sign up success ${state.user.uid} ") 
+                : Text("Sign In success ${state.user.uid}")));
               setState(() {
-                _isSignUp = !_isSignUp; // Toggle between Sign In and Sign Up
+                _isSignUp = !_isSignUp;// Toggle between Sign In and Sign Up
               });
             }
             if (state is AuthFailure){
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.errorMessage),backgroundColor: Colors.red[600],));
-                emailController.clear();
-                passwordController.clear();
             }
+            emailController.clear();
+            passwordController.clear();
           },
           builder: (context, state) {
             if (state is AuthLoadingState) {

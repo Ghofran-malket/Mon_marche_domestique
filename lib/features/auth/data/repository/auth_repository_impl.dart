@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mon_marche_domestique/features/auth/data/model/user_model.dart';
 import 'package:mon_marche_domestique/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -21,20 +22,20 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User> signUp({required String email, required String password}) async{
+  Future<UserModel> signUp({required String email, required String password}) async{
     final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
-    return userCredential.user!;
+    return UserModel.fromFirebase(userCredential.user!);
   }
 
   @override
-  Future<User> signIn({required String email, required String password}) async{
+  Future<UserModel> signIn({required String email, required String password}) async{
     final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
-    return userCredential.user!;
+    return UserModel.fromFirebase(userCredential.user!);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mon_marche_domestique/features/auth/data/model/user_model.dart';
 import 'package:mon_marche_domestique/features/auth/domain/repository/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -7,7 +8,7 @@ class SignUp {
 
   SignUp(this.repository);
 
-  Future<Either<String, User>> call(email,password) async {
+  Future<Either<String, UserModel>> call(email,password) async {
     try {
       final user = await repository.signUp(email:email, password: password);
       return Right(user);
