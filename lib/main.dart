@@ -16,53 +16,32 @@ import 'package:mon_marche_domestique/features/items/domain/use_cases/get_items.
 import 'package:mon_marche_domestique/features/items/domain/use_cases/increase_quantity.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/pages/add_item_page.dart';
-import 'package:mon_marche_domestique/features/items/presentations/pages/items_list_page.dart';
 
 void main() async {
-  final itemRepository = ItemRepositoryImpl();
-  final authRepo = AuthRepositoryImpl();
-  final getItems = GetItems(itemRepository);
-  final addItem = AddItem(itemRepository);
-  final increaseQuantity = IncreaseItemsQuantity(itemRepository);
-  final decreaseQuantity = DecreaseItemsQuantity(itemRepository);
-  final checkUserState = CheckUserState(authRepo);
-  final signUp = SignUp(authRepo);
-  final signIn = SignIn(authRepo);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp(
-    getItems: getItems,
-    addItem: addItem,
-    increaseQuantity: increaseQuantity,
-    decreaseItemsQuantity : decreaseQuantity,
-    checkUserState : checkUserState,
-    signUp : signUp,
-    signIn : signIn
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final GetItems getItems;
-  final AddItem addItem;
-  final IncreaseItemsQuantity increaseQuantity;
-  final DecreaseItemsQuantity decreaseItemsQuantity;
-  final CheckUserState checkUserState;
-  final SignUp signUp;
-  final SignIn signIn;
-  MyApp({required this.getItems, required this.addItem, required this.increaseQuantity, 
-  required this.decreaseItemsQuantity, required this.checkUserState, required this.signUp, required this.signIn});
-
-
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => ItemBloc(getItems: getItems, addItem: addItem, increaseItemsQuantity: increaseQuantity,
-         decreaseItemsQuantity: decreaseItemsQuantity,),
+        create: (context) => ItemBloc(
+          getItems: GetItems(ItemRepositoryImpl()),
+          addItem: AddItem(ItemRepositoryImpl()),
+          increaseItemsQuantity: IncreaseItemsQuantity(ItemRepositoryImpl()),
+          decreaseItemsQuantity: DecreaseItemsQuantity(ItemRepositoryImpl())
+        ),
         child: BlocProvider(
-          create: (context) => AuthBloc(checkUserState: checkUserState, signUp: signUp, signIn: signIn),
+          create: (context) => AuthBloc(
+            checkUserState: CheckUserState(AuthRepositoryImpl()),
+            signUp: SignUp(AuthRepositoryImpl()), 
+            signIn: SignIn(AuthRepositoryImpl()
+          )),
           child: MaterialApp(
             title: 'Flutter Clean Architecture',
             debugShowCheckedModeBanner: false,
