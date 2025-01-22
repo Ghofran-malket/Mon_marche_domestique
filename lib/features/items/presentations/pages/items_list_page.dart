@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mon_marche_domestique/common_widgets/custom_drawer.dart';
 import 'package:mon_marche_domestique/core/style.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
@@ -25,6 +26,7 @@ class _ItemListPageState extends State<ItemListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       appBar: const CustomeAppBar(
         title: 'Mon marche domestique',
         icon: Icons.menu,   

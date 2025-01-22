@@ -11,7 +11,9 @@ class CustomeAppBar extends StatelessWidget implements PreferredSizeWidget{
         title: Text(title,),
         leading: IconButton(
           icon: Icon(icon),
-          onPressed: (){},
+          onPressed: (){
+            Scaffold.of(context).openDrawer();
+          },
         ),
       );
   }

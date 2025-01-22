@@ -9,17 +9,7 @@ import 'package:mon_marche_domestique/features/auth/domain/repository/auth_repos
 class AuthRepositoryImpl implements AuthRepository {
   
   @override
-  void authStateChange(){
-    FirebaseAuth.instance
-    .authStateChanges()
-    .listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-      }
-    });
-  }
+  Stream<User?> get authStateChanges => FirebaseAuth.instance.authStateChanges();
 
   @override
   Future<UserModel> signUp({required String email, required String password}) async{

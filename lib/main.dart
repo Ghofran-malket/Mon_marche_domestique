@@ -1,12 +1,14 @@
 // lib/main.dart
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mon_marche_domestique/features/auth/data/repository/auth_repository_impl.dart';
-import 'package:mon_marche_domestique/features/auth/domain/use_cases/check_user_state.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/log_out.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_up.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event.dart';
+import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/pages/auth_page.dart';
+import 'package:mon_marche_domestique/features/items/presentations/pages/items_list_page.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,19 +41,32 @@ class MyApp extends StatelessWidget {
         ),
         child: BlocProvider(
           create: (context) => AuthBloc(
-            checkUserState: CheckUserState(AuthRepositoryImpl()),
             signUp: SignUp(AuthRepositoryImpl()), 
             signIn: SignIn(AuthRepositoryImpl()),
             logOut: LogOut(AuthRepositoryImpl())
+          )..add(AuthStateChangeEvent()),
+          child:  MaterialApp(
+                    title: 'Flutter Clean Architecture',
+                    debugShowCheckedModeBanner: false,
+                    home: BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        if (state is AuthSuccess) {
+                          return ItemListPage();
+                        } else if (state is LogedOut) {
+                          return AuthPage();
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                    routes: {
+                      '/add': (context) => AddItemPage(),
+                    },
           ),
-          child: MaterialApp(
-            title: 'Flutter Clean Architecture',
-            debugShowCheckedModeBanner: false,
-            home: AuthPage(),
-            routes: {
-              '/add': (context) => AddItemPage(),
-            },
-          ),
-        ));
+
+                
+              
+            
+          ));
   }
 }

@@ -1,8 +1,6 @@
-// lib/presentation/blocs/item_bloc.dart
-import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mon_marche_domestique/features/auth/domain/use_cases/check_user_state.dart';
+import 'package:mon_marche_domestique/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:mon_marche_domestique/features/auth/domain/entities/user_entity.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/log_out.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_up.dart';
@@ -10,17 +8,21 @@ import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final CheckUserState checkUserState;
   final SignUp signUp;
   final SignIn signIn;
   final LogOut logOut;
 
-  AuthBloc({required this.checkUserState, required this.signUp, required this.signIn, required this.logOut}) : super(AuthInitialState()) {
+  AuthBloc({required this.signUp, required this.signIn, required this.logOut}) : super(AuthInitialState()) {
 
     on<AuthStateChangeEvent>((event, emit) async{
       try{
-        checkUserState();
-        emit(AuthStateChangeState());
+        await for (var user in AuthRepositoryImpl().authStateChanges) {
+          if (user != null) {
+            emit(AuthSuccess(user:UserEntity(displayName: user.displayName ?? '', email: user.email!, uid: user.uid))); // User is authenticated
+          } else {
+            emit(LogedOut()); // User is not authenticated
+          }
+        }
       }catch(e){
         print("Error");
       }
@@ -49,8 +51,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }));
     
     on<LogOutEvent>((event, emit) async{
-      await logOut();
       emit(LogedOut());
+      await logOut();
     });
 
   }

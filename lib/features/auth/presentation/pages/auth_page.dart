@@ -6,6 +6,7 @@ import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custom_pimary_button.dart';
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custom_text_field.dart';
 import 'package:mon_marche_domestique/features/items/presentations/widgets/custome_appbar.dart';
+import 'package:mon_marche_domestique/features/items/presentations/pages/items_list_page.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -42,6 +43,7 @@ class _AuthPageState extends State<AuthPage> {
               setState(() {
                 _isSignUp = !_isSignUp;// Toggle between Sign In and Sign Up
               });
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemListPage()));
             }
             if (state is AuthFailure){
               ScaffoldMessenger.of(context).showSnackBar(
