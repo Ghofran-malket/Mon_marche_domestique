@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mon_marche_domestique/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/check_user_state.dart';
+import 'package:mon_marche_domestique/features/auth/domain/use_cases/log_out.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_up.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.dart';
@@ -40,8 +41,9 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthBloc(
             checkUserState: CheckUserState(AuthRepositoryImpl()),
             signUp: SignUp(AuthRepositoryImpl()), 
-            signIn: SignIn(AuthRepositoryImpl()
-          )),
+            signIn: SignIn(AuthRepositoryImpl()),
+            logOut: LogOut(AuthRepositoryImpl())
+          ),
           child: MaterialApp(
             title: 'Flutter Clean Architecture',
             debugShowCheckedModeBanner: false,

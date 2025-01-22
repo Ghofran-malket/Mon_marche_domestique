@@ -14,3 +14,5 @@ class SignInEvent extends AuthEvent{
   final String password;
   SignInEvent({required this.email, required this.password});
 }
+
+class LogOutEvent extends AuthEvent {}

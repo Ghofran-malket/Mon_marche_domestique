@@ -47,6 +47,10 @@ class _AuthPageState extends State<AuthPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.errorMessage),backgroundColor: Colors.red[600],));
             }
+            if (state is LogedOut){
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("You are logedout"),backgroundColor: Colors.red[600],));
+            }
             emailController.clear();
             passwordController.clear();
           },
@@ -59,6 +63,7 @@ class _AuthPageState extends State<AuthPage> {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                    
                     CustomTextField(controller: emailController, labelText: 'email'),
@@ -87,6 +92,12 @@ class _AuthPageState extends State<AuthPage> {
                       child: Text(_isSignUp
                           ? 'Already have an account? Sign In'
                           : 'Don\'t have an account? Sign Up'),
+                    ),
+                    _isSignUp ? Container() : TextButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(LogOutEvent());
+                      },
+                      child: Text('Logout'),
                     ),
                   
                   ],

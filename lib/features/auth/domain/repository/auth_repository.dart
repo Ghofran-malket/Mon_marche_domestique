@@ -6,4 +6,5 @@ abstract class AuthRepository {
   
   Future<UserModel> signUp({required String email, required String password});
   Future<UserModel> signIn({required String email, required String password});
+  Future<void> logOut();
 }

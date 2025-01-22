@@ -38,4 +38,9 @@ class AuthRepositoryImpl implements AuthRepository {
     );
     return UserModel.fromFirebase(userCredential.user!);
   }
+
+  @override
+  Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }

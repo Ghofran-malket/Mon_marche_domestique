@@ -19,3 +19,5 @@ class AuthFailure extends AuthState {
 
   AuthFailure(this.errorMessage);
 }
+
+class LogedOut extends AuthState {}

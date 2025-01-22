@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/check_user_state.dart';
+import 'package:mon_marche_domestique/features/auth/domain/use_cases/log_out.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_up.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event.dart';
@@ -12,8 +13,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckUserState checkUserState;
   final SignUp signUp;
   final SignIn signIn;
+  final LogOut logOut;
 
-  AuthBloc({required this.checkUserState, required this.signUp, required this.signIn}) : super(AuthInitialState()) {
+  AuthBloc({required this.checkUserState, required this.signUp, required this.signIn, required this.logOut}) : super(AuthInitialState()) {
 
     on<AuthStateChangeEvent>((event, emit) async{
       try{
@@ -45,6 +47,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       
     }));
+    
+    on<LogOutEvent>((event, emit) async{
+      await logOut();
+      emit(LogedOut());
+    });
 
   }
 }
