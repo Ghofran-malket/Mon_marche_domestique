@@ -1,8 +1,12 @@
 // lib/data/repositories/item_repository_impl.dart
+import 'package:mon_marche_domestique/features/items/data/model/item_model.dart';
 import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
 import 'package:mon_marche_domestique/features/items/domain/repository/item_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ItemRepositoryImpl implements ItemRepository {
+  final db = FirebaseFirestore.instance;
+
   final List<Item> _items = [
     Item(name:"Riz",mark:"Chetoura",quantity:"2"),
     Item(name:"Boulgour",mark:"Chetoura",quantity:"1"),
@@ -14,8 +18,15 @@ class ItemRepositoryImpl implements ItemRepository {
   ];
 
   @override
-  List<Item> getItems() {
-    return _items;
+  Future<List<Item>> getItems() async {
+    try {
+      var snapshot = await db.collection('items').get();
+      return snapshot.docs.map((doc) {
+        return ItemModel.fromFirestore(doc.data());
+      }).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch items: $e');
+    }
   }
 
   @override

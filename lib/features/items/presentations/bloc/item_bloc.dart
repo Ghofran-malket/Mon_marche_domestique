@@ -22,8 +22,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
       try {
         // Fetch the items using the GetItems use case
-        final items = getItems();
-        // On success, yield the ItemLoadedState with the list of items
+        final List<Item> items = await getItems();
         emit(ItemLoadedState(items));
       } catch (e) {
         // On error, yield the ItemErrorState with an error message
@@ -35,8 +34,8 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       emit(ItemLoadingState());
 
       try {
-        addItem(Item(name: event.name, mark: event.mark, quantity: event.quantity));
-        final items = getItems();
+        await addItem(Item(name: event.name, mark: event.mark, quantity: event.quantity));
+        final items = await getItems();
         emit(ItemLoadedState(items));
       } catch (e) {
         // On error, yield the ItemErrorState with an error message
@@ -47,7 +46,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     on<IncreaseItemsQuantityEvent>((event, emit) async{
       try{
         increaseItemsQuantity(event.item);
-        final items = getItems();
+        final items = await getItems();
         emit(ItemLoadedState(items));
       }catch(e){
         emit(ItemErrorState('Failed to increase item\'s quantity: $e'));
@@ -57,7 +56,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     on<MinusItemsQuantityEvent>((event, emit) async{
       try{
         decreaseItemsQuantity(event.item);
-        final items = getItems();
+        final items = await getItems();
         emit(ItemLoadedState(items));
       }catch(e){
         emit(ItemErrorState('Failed to increase item\'s quantity: $e'));

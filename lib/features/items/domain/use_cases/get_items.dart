@@ -7,7 +7,7 @@ class GetItems {
 
   GetItems(this.repository);
   
-  List<Item> call() {
+  Future<List<Item>> call() {
     return repository.getItems();
   }
 }

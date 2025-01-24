@@ -12,4 +12,12 @@ class ItemModel extends Item {
   Map<String, dynamic> toJson() {
     return {'name': name, 'mark': mark, 'quantity': quantity};
   }
+
+  factory ItemModel.fromFirestore(Map<String, dynamic> firestore) {
+    return ItemModel(
+      name: firestore['name'],
+      mark: firestore['mark'],
+      quantity: firestore['quantity']
+    );
+  }
 }
