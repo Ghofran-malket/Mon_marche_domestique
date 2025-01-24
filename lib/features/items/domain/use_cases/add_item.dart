@@ -8,10 +8,6 @@ class AddItem {
   AddItem(this.repository);
 
   Future<void> call(Item item) async {
-
-    bool exist = repository.checkForItem(item);
-    if(!exist){
-      repository.addItem(item);
-    }
+    await repository.addOrUpdateItem(item);
   }
 }

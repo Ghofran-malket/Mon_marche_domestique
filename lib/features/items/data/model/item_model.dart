@@ -9,7 +9,7 @@ class ItemModel extends Item {
     return ItemModel(name: json['name'], mark: json['mark'], quantity: json['quantity']);
   }
   
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toFirestore() {
     return {'name': name, 'mark': mark, 'quantity': quantity};
   }
 

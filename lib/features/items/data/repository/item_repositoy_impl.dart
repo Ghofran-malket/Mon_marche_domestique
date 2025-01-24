@@ -30,25 +30,35 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
-  void addItem(Item item) {
-    _items.add(item);
-  }
+  Future<void> addOrUpdateItem(Item item) async {
+    try {
+      QuerySnapshot querySnapshot = await db
+          .collection('items')
+          .where('name', isEqualTo: item.name).where('mark', isEqualTo: item.mark)
+          .get();
 
-  @override
-  bool checkForItem(Item item) {
-    bool exist= false;
-    int index = 0;
-    for(int i=0; i< _items.length; i++){
-      if(_items[i].name.toLowerCase() == item.name.toLowerCase() && _items[i].mark.toLowerCase() == item.mark.toLowerCase()){
-        exist = true;
-        index = i;
-        break;
+      if (querySnapshot.docs.isNotEmpty) {
+        var existingItemDoc = querySnapshot.docs.first;
+        var existingItemModel = ItemModel.fromFirestore(existingItemDoc.data() as Map<String, dynamic>);
+      
+        int newQuantity = int.parse(existingItemModel.quantity) + int.parse(item.quantity);
+
+        await db.collection('items').doc(existingItemDoc.id).update({
+          'quantity': newQuantity.toString(),
+        });
+
+        print('Item quantity updated!');
+      } else {
+
+        ItemModel model = ItemModel(name: item.name, mark: item.mark, quantity: item.quantity);
+        await db.collection('items').add(model.toFirestore());
+
+        print('New item added!');
       }
+    } catch (e) {
+      print('Error adding or updating item: $e');
+      throw Exception('Failed to add or update item');
     }
-    if (exist){
-      _items[index].quantity = (int.parse(_items[index].quantity) + int.parse(item.quantity)).toString();
-    }
-    return exist;
   }
 
   @override
