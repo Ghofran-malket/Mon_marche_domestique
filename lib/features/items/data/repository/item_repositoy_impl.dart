@@ -7,16 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ItemRepositoryImpl implements ItemRepository {
   final db = FirebaseFirestore.instance;
 
-  final List<Item> _items = [
-    Item(name:"Riz",mark:"Chetoura",quantity:"2"),
-    Item(name:"Boulgour",mark:"Chetoura",quantity:"1"),
-    Item(name:"Semoul",mark:"Chetoura",quantity:"4"),
-    Item(name:"Pois chich",mark:"Chetoura",quantity:"1"),
-    Item(name:"Petit pois",mark:"Chetoura",quantity:"2"),
-    Item(name:"Feve",mark:"Chetoura",quantity:"3"),
-    
-  ];
-
   Future<QuerySnapshot> findItemByName(Item item) async {
      return await db
           .collection('items')
@@ -85,10 +75,6 @@ class ItemRepositoryImpl implements ItemRepository {
       print('Error increasing item\'s quantity: $e');
       throw Exception('Failed to increase item\'s quantity');
     }
-  }
-
-  int findIndexById(String name) {
-    return _items.indexWhere((item) => item.name == name);
   }
 
   @override
