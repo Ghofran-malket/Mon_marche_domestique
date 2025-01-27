@@ -7,7 +7,7 @@ abstract class ItemRepository {
   // Method to add a new item or updation his quantity if it's exist 
   Future<void> addOrUpdateItem(Item item);
 
-  void increseQuantity(Item item);
+  Future increseQuantity(Item item);
 
   void decreaseQuantity(Item item);
 }

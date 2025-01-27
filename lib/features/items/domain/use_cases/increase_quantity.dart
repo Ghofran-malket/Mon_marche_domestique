@@ -7,8 +7,8 @@ class IncreaseItemsQuantity {
 
   IncreaseItemsQuantity(this.repository);
   
-  void call(Item item) {
-    repository.increseQuantity(item);
+  Future call(Item item) async{
+    return await repository.increseQuantity(item);
   }
 }
 

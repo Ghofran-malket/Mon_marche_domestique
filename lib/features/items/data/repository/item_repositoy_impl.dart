@@ -17,6 +17,13 @@ class ItemRepositoryImpl implements ItemRepository {
     
   ];
 
+  Future<QuerySnapshot> findItemByName(Item item) async {
+     return await db
+          .collection('items')
+          .where('name', isEqualTo: item.name).where('mark', isEqualTo: item.mark)
+          .get(); 
+  }
+
   @override
   Future<List<Item>> getItems() async {
     try {
@@ -32,10 +39,7 @@ class ItemRepositoryImpl implements ItemRepository {
   @override
   Future<void> addOrUpdateItem(Item item) async {
     try {
-      QuerySnapshot querySnapshot = await db
-          .collection('items')
-          .where('name', isEqualTo: item.name).where('mark', isEqualTo: item.mark)
-          .get();
+      QuerySnapshot querySnapshot = await findItemByName(item);
 
       if (querySnapshot.docs.isNotEmpty) {
         var existingItemDoc = querySnapshot.docs.first;
@@ -62,9 +66,25 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
-  void increseQuantity(Item item){
-    int index = findIndexById(item.name);
-    _items[index].quantity = (int.parse(item.quantity) + 1 ).toString();
+  Future increseQuantity(Item item) async{
+    try {
+      QuerySnapshot querySnapshot = await findItemByName(item);
+
+      if (querySnapshot.docs.isNotEmpty) {
+        var existingItemDoc = querySnapshot.docs.first;
+      
+        int newQuantity = int.parse(item.quantity) + 1;
+
+        await db.collection('items').doc(existingItemDoc.id).update({
+          'quantity': newQuantity.toString(),
+        });
+
+        print('Item quantity increased by one!');
+      }
+    } catch (e) {
+      print('Error increasing item\'s quantity: $e');
+      throw Exception('Failed to increase item\'s quantity');
+    }
   }
 
   int findIndexById(String name) {
