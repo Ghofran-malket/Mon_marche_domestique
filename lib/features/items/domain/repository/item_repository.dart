@@ -9,5 +9,5 @@ abstract class ItemRepository {
 
   Future increseQuantity(Item item);
 
-  void decreaseQuantity(Item item);
+  Future decreaseQuantity(Item item);
 }

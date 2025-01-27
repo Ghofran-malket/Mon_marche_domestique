@@ -55,7 +55,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
     on<MinusItemsQuantityEvent>((event, emit) async{
       try{
-        decreaseItemsQuantity(event.item);
+        await decreaseItemsQuantity(event.item);
         final items = await getItems();
         emit(ItemLoadedState(items));
       }catch(e){

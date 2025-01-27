@@ -92,10 +92,25 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
-  void decreaseQuantity(Item item){
-    int index = findIndexById(item.name);
-    if(int.parse(item.quantity) > 0){
-      _items[index].quantity = (int.parse(item.quantity) - 1 ).toString();
+  Future decreaseQuantity(Item item) async{
+    try {
+      QuerySnapshot querySnapshot = await findItemByName(item);
+
+      if (querySnapshot.docs.isNotEmpty) {
+        var existingItemDoc = querySnapshot.docs.first;
+
+        if(int.parse(item.quantity) > 0){
+          int newQuantity = int.parse(item.quantity) - 1;
+
+          await db.collection('items').doc(existingItemDoc.id).update({
+            'quantity': newQuantity.toString(),
+          });
+          print('Item quantity decreased by one!');
+        }
+      }
+    } catch (e) {
+      print('Error decreasing item\'s quantity: $e');
+      throw Exception('Failed to decrease item\'s quantity');
     }
   }
 

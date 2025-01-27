@@ -7,8 +7,8 @@ class DecreaseItemsQuantity {
 
   DecreaseItemsQuantity(this.repository);
   
-  void call(Item item) {
-    repository.decreaseQuantity(item);
+  Future call(Item item) async {
+    return await repository.decreaseQuantity(item);
   }
 }
 
