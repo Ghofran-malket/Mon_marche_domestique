@@ -24,3 +24,5 @@ class MinusItemsQuantityEvent extends ItemEvent {
 
   MinusItemsQuantityEvent({required this.item});
 }
+
+class UploadFileEvent extends ItemEvent {}

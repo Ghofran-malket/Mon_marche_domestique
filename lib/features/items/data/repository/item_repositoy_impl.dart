@@ -3,6 +3,8 @@ import 'package:mon_marche_domestique/features/items/data/model/item_model.dart'
 import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
 import 'package:mon_marche_domestique/features/items/domain/repository/item_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
 class ItemRepositoryImpl implements ItemRepository {
   final db = FirebaseFirestore.instance;
@@ -97,6 +99,28 @@ class ItemRepositoryImpl implements ItemRepository {
     } catch (e) {
       print('Error decreasing item\'s quantity: $e');
       throw Exception('Failed to decrease item\'s quantity');
+    }
+  }
+
+  Future<Map<String, dynamic>> loadJsonData() async {
+    String jsonString = await rootBundle.loadString('assets/data.json');
+    return json.decode(jsonString);
+  }
+
+  @override
+  Future<void> uploadJsonToFirestore() async {
+    
+    Map<String, dynamic> jsonData = await loadJsonData();
+    
+    //convert JSON list into documents
+    List<dynamic> dataList = jsonData['items'];
+
+    // Upload each item as a Firestore document
+    CollectionReference collection = FirebaseFirestore.instance.collection('items');
+    
+    for (var item in dataList) {
+      item['created_at'] = DateTime.now();
+      await collection.add(item);
     }
   }
 

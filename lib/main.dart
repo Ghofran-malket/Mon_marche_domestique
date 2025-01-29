@@ -8,6 +8,7 @@ import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/pages/auth_page.dart';
+import 'package:mon_marche_domestique/features/items/domain/use_cases/upload_json_file.dart';
 import 'package:mon_marche_domestique/features/items/presentations/pages/items_list_page.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
           getItems: GetItems(ItemRepositoryImpl()),
           addItem: AddItem(ItemRepositoryImpl()),
           increaseItemsQuantity: IncreaseItemsQuantity(ItemRepositoryImpl()),
-          decreaseItemsQuantity: DecreaseItemsQuantity(ItemRepositoryImpl())
+          decreaseItemsQuantity: DecreaseItemsQuantity(ItemRepositoryImpl()),
+          uploadFile: UploadJsonFile(ItemRepositoryImpl())
         ),
         child: BlocProvider(
           create: (context) => AuthBloc(

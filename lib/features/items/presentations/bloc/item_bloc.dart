@@ -5,6 +5,7 @@ import 'package:mon_marche_domestique/features/items/domain/use_cases/add_item.d
 import 'package:mon_marche_domestique/features/items/domain/use_cases/decrease_quantity.dart';
 import 'package:mon_marche_domestique/features/items/domain/use_cases/get_items.dart';
 import 'package:mon_marche_domestique/features/items/domain/use_cases/increase_quantity.dart';
+import 'package:mon_marche_domestique/features/items/domain/use_cases/upload_json_file.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_state.dart';
 
@@ -13,8 +14,9 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
   final AddItem addItem;
   final IncreaseItemsQuantity increaseItemsQuantity;
   final DecreaseItemsQuantity decreaseItemsQuantity;
+  final UploadJsonFile uploadFile;
 
-  ItemBloc({required this.getItems, required this.addItem, required this.increaseItemsQuantity, required this.decreaseItemsQuantity}) : super(ItemLoadingState()) {
+  ItemBloc({required this.getItems, required this.addItem, required this.increaseItemsQuantity, required this.decreaseItemsQuantity, required this.uploadFile}) : super(ItemLoadingState()) {
     // Register the handler for GetItemListEvent using on<Event>
     on<GetItemListEvent>((event, emit) async {
       // Yield ItemLoadingState while the items are being fetched
@@ -60,6 +62,16 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
         emit(ItemLoadedState(items));
       }catch(e){
         emit(ItemErrorState('Failed to increase item\'s quantity: $e'));
+      }
+    }); 
+
+    on<UploadFileEvent>((event, emit) async{
+      try{
+        await uploadFile();
+        final items = await getItems();
+        emit(ItemLoadedState(items));
+      }catch(e){
+        emit(ItemErrorState('Failed to upload json file: $e'));
       }
     }); 
 

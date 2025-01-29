@@ -10,4 +10,6 @@ abstract class ItemRepository {
   Future increseQuantity(Item item);
 
   Future decreaseQuantity(Item item);
+
+  Future<void> uploadJsonToFirestore() async {}
 }

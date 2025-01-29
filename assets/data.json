@@ -1,0 +1,25 @@
+{
+    "items": [
+      {
+        "id": "1",
+        "name": "Riz",
+        "mark": "chetoura",
+        "expiration_date" : "2026-01-01",
+        "quantity": "2"
+      },
+      {
+        "id": "2",
+        "name": "Pois chich",
+        "mark": "chetoura",
+        "expiration_date" : "2026-01-01",
+        "quantity": "2"
+      },
+      {
+        "id": "3",
+        "name": "Boulgour",
+        "mark": "chetoura",
+        "expiration_date" : "2026-01-01",
+        "quantity": "2"
+      }
+    ]
+}

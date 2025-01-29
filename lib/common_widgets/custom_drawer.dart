@@ -4,6 +4,8 @@ import 'package:mon_marche_domestique/core/style.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state.dart';
+import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
+import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -40,6 +42,12 @@ class CustomDrawer extends StatelessWidget {
               // Update the state of the app.
               // ...
             },
+          ),
+          ListTile(
+            title: Text('Upload file'),
+            onTap:(){
+              context.read<ItemBloc>().add((UploadFileEvent())); 
+            }
           ),
           ListTile(
             title: const Text('About'),
