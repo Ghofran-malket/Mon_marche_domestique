@@ -1,7 +1,5 @@
 
 import 'dart:async';
-
-import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mon_marche_domestique/features/auth/data/model/user_model.dart';
 import 'package:mon_marche_domestique/features/auth/domain/repository/auth_repository.dart';

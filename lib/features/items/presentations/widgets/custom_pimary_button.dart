@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomPrimaryButton extends StatelessWidget {
-  String label;
-  VoidCallback  onPressed;
+  final String label;
+  final VoidCallback  onPressed;
   CustomPrimaryButton({super.key, required this.label, required this.onPressed});
 
   @override
@@ -13,13 +13,13 @@ class CustomPrimaryButton extends StatelessWidget {
         children: [
           Expanded(
             child: ElevatedButton(
-              child: Text(label, style:TextStyle(color:Colors.white)),
               onPressed: onPressed,
               style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(Size(double.minPositive,50)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.indigo),
-                elevation: MaterialStateProperty.all(12),
+                minimumSize: WidgetStatePropertyAll(Size(double.minPositive,50)),
+                backgroundColor: WidgetStatePropertyAll<Color>(Colors.indigo),
+                elevation: WidgetStatePropertyAll(12),
               ),
+              child: Text(label, style:TextStyle(color:Colors.white)),
             ),
           ),
         ],

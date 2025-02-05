@@ -5,9 +5,9 @@ import 'package:mon_marche_domestique/features/items/presentations/bloc/item_blo
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
 
 class ItemListTile extends StatelessWidget {
-  String itemName;
-  String itemMark;
-  String itemQuantity;
+  final String itemName;
+  final String itemMark;
+  final String itemQuantity;
   ItemListTile({super.key, required this.itemName, required this.itemMark, required this.itemQuantity});
 
   @override
