@@ -87,13 +87,15 @@ class ItemRepositoryImpl implements ItemRepository {
       if (querySnapshot.docs.isNotEmpty) {
         var existingItemDoc = querySnapshot.docs.first;
 
-        if(int.parse(item.quantity) > 0){
+        if(int.parse(item.quantity) > 1){
           int newQuantity = int.parse(item.quantity) - 1;
 
           await db.collection('items').doc(existingItemDoc.id).update({
             'quantity': newQuantity.toString(),
           });
           print('Item quantity decreased by one!');
+        }else {
+          await db.collection('items').doc(existingItemDoc.id).delete();
         }
       }
     } catch (e) {
