@@ -1,6 +1,7 @@
 // lib/main.dart
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mon_marche_domestique/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:mon_marche_domestique/features/auth/domain/use_cases/google_sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/log_out.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_up.dart';
@@ -45,7 +46,8 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthBloc(
             signUp: SignUp(AuthRepositoryImpl()), 
             signIn: SignIn(AuthRepositoryImpl()),
-            logOut: LogOut(AuthRepositoryImpl())
+            logOut: LogOut(AuthRepositoryImpl()),
+            googleSignIn: GoogleSignIn(AuthRepositoryImpl())
           )..add(AuthStateChangeEvent()),
           child:  MaterialApp(
                     title: 'Flutter Clean Architecture',

@@ -23,6 +23,16 @@ class CustomDrawer extends StatelessWidget {
             child: Center(child: Text('Mon marche domestique',style: bigTitle.copyWith(color: Colors.white),)),
           ),
           ListTile(
+            title: BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                if (state is AuthSuccess) {
+                  return Text(state.user.displayName);                
+                }
+                return Container();
+              },
+            ),
+          ),
+          ListTile(
             title: const Text('Home'),
             onTap: () {
               // Update the state of the app.

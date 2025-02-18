@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mon_marche_domestique/core/style.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state.dart';
@@ -101,6 +103,18 @@ class _AuthPageState extends State<AuthPage> {
                       },
                       child: Text('Logout'),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Sign in by',style: bigTitle.copyWith(fontSize:15,fontWeight: FontWeight.normal),),
+                        IconButton(
+                          onPressed: (){
+                            context.read<AuthBloc>().add(GoogleSignInEvent());
+                          },
+                          icon: Icon(FontAwesomeIcons.google,color: Colors.indigo,)
+                        )
+                      ],
+                    )
                   
                   ],
                 ),

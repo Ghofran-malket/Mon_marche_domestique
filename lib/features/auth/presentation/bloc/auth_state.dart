@@ -21,3 +21,5 @@ class AuthFailure extends AuthState {
 }
 
 class LogedOut extends AuthState {}
+
+class AuthGoogleSuccess extends AuthState {}

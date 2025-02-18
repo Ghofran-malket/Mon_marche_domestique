@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mon_marche_domestique/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:mon_marche_domestique/features/auth/domain/entities/user_entity.dart';
+import 'package:mon_marche_domestique/features/auth/domain/use_cases/google_sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/log_out.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/sign_up.dart';
@@ -11,8 +12,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUp signUp;
   final SignIn signIn;
   final LogOut logOut;
+  final GoogleSignIn googleSignIn;
 
-  AuthBloc({required this.signUp, required this.signIn, required this.logOut}) : super(AuthInitialState()) {
+  AuthBloc({required this.signUp, required this.signIn, required this.logOut, required this.googleSignIn}) : super(AuthInitialState()) {
 
     on<AuthStateChangeEvent>((event, emit) async{
       try{
@@ -54,6 +56,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(LogedOut());
       await logOut();
     });
+
+    on<GoogleSignInEvent>(((event, emit) async{
+      emit(AuthLoadingState());
+      final result = await googleSignIn();
+
+      result.fold(
+        (errorMessage) => emit(AuthFailure(errorMessage)),// In case of error
+        (user) => emit(AuthSuccess(user: user))
+      );
+      
+    }));
 
   }
 }
