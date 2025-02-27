@@ -1,2 +1,1 @@
-String stripePublishableKey = "pk_test_51QwNQXIJKrqOHPvoPgsXrUajSmSTmOWUp6RZTpsmejEv4k7GQrLdbpXoB309yByiTdPbRLNXWo5NkxqXE2VgZvAm00YqlKaa0e";
-String stripeSecretKey = "sk_test_51QwNQXIJKrqOHPvovDhYkpSPFRKlc9zq6OHhs8Fol6EGiwM2p5suxtygfJkg7cxXFWFy84yzblpSy8TaTYsb1S4l00QJnNANRZ";
+
