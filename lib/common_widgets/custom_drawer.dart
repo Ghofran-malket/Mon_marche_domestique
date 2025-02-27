@@ -6,6 +6,7 @@ import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
+import 'package:mon_marche_domestique/features/payment/presentations/pages/payment_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -64,6 +65,12 @@ class CustomDrawer extends StatelessWidget {
             onTap: () {
               // Update the state of the app.
               // ...
+            },
+          ),
+          ListTile(
+            title: const Text('Payment'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> PaymentPage()));
             },
           ),
           BlocBuilder<AuthBloc, AuthState>(

@@ -1,5 +1,7 @@
 // lib/main.dart
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:mon_marche_domestique/core/const.dart';
 import 'package:mon_marche_domestique/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/google_sign_in.dart';
 import 'package:mon_marche_domestique/features/auth/domain/use_cases/log_out.dart';
@@ -11,6 +13,7 @@ import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state
 import 'package:mon_marche_domestique/features/auth/presentation/pages/auth_page.dart';
 import 'package:mon_marche_domestique/features/items/domain/use_cases/upload_json_file.dart';
 import 'package:mon_marche_domestique/features/items/presentations/pages/items_list_page.dart';
+import 'package:mon_marche_domestique/features/payment/presentations/bloc/payment_bloc.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,54 +26,61 @@ import 'package:mon_marche_domestique/features/items/presentations/bloc/item_blo
 import 'package:mon_marche_domestique/features/items/presentations/pages/add_item_page.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await _setUp();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+Future<void> _setUp() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = stripePublishableKey;
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
 
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => ItemBloc(
-          getItems: GetItems(ItemRepositoryImpl()),
-          addItem: AddItem(ItemRepositoryImpl()),
-          increaseItemsQuantity: IncreaseItemsQuantity(ItemRepositoryImpl()),
-          decreaseItemsQuantity: DecreaseItemsQuantity(ItemRepositoryImpl()),
-          uploadFile: UploadJsonFile(ItemRepositoryImpl())
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ItemBloc(
+              getItems: GetItems(ItemRepositoryImpl()),
+              addItem: AddItem(ItemRepositoryImpl()),
+              increaseItemsQuantity:
+                  IncreaseItemsQuantity(ItemRepositoryImpl()),
+              decreaseItemsQuantity:
+                  DecreaseItemsQuantity(ItemRepositoryImpl()),
+              uploadFile: UploadJsonFile(ItemRepositoryImpl())),
         ),
-        child: BlocProvider(
+        BlocProvider(
           create: (context) => AuthBloc(
-            signUp: SignUp(AuthRepositoryImpl()), 
-            signIn: SignIn(AuthRepositoryImpl()),
-            logOut: LogOut(AuthRepositoryImpl()),
-            googleSignIn: GoogleSignIn(AuthRepositoryImpl())
-          )..add(AuthStateChangeEvent()),
-          child:  MaterialApp(
-                    title: 'Flutter Clean Architecture',
-                    debugShowCheckedModeBanner: false,
-                    home: BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, state) {
-                        if (state is AuthSuccess) {
-                          return ItemListPage();
-                        } else if (state is LogedOut) {
-                          return AuthPage();
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      },
-                    ),
-                    routes: {
-                      '/add': (context) => AddItemPage(),
-                    },
-          ),
-
-                
-              
-            
-          ));
+              signUp: SignUp(AuthRepositoryImpl()),
+              signIn: SignIn(AuthRepositoryImpl()),
+              logOut: LogOut(AuthRepositoryImpl()),
+              googleSignIn: GoogleSignIn(AuthRepositoryImpl()))
+            ..add(AuthStateChangeEvent()),
+        ),
+        BlocProvider(create: (context) => PaymentBloc())
+      ],
+      child: MaterialApp(
+        title: 'Flutter Clean Architecture',
+        debugShowCheckedModeBanner: false,
+        home: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is AuthSuccess) {
+              return ItemListPage();
+            } else if (state is LogedOut) {
+              return AuthPage();
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+        routes: {
+          '/add': (context) => AddItemPage(),
+        },
+      ),
+    );
   }
 }
