@@ -1,5 +1,6 @@
 // lib/main.dart
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:mon_marche_domestique/core/const.dart';
 import 'package:mon_marche_domestique/features/auth/data/repository/auth_repository_impl.dart';
@@ -26,11 +27,13 @@ import 'package:mon_marche_domestique/features/items/presentations/bloc/item_blo
 import 'package:mon_marche_domestique/features/items/presentations/pages/add_item_page.dart';
 
 void main() async {
+  await dotenv.load(fileName: '.env'); 
   await _setUp();
   runApp(MyApp());
 }
 
 Future<void> _setUp() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   Stripe.publishableKey = stripePublishableKey;
   await Firebase.initializeApp(
