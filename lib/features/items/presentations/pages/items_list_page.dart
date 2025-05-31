@@ -25,47 +25,64 @@ class _ItemListPageState extends State<ItemListPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: CustomDrawer(),
-      appBar: const CustomeAppBar(
-        title: 'Mon marche domestique',
-        icon: Icons.menu,   
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("You have these items in your home:",style: bigTitle,),
-            BlocBuilder<ItemBloc, ItemState>(
-              builder: (context, state) {
-                if (state is ItemLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is ItemLoadedState) {
-                  return ListView.builder(
-                    itemCount: state.items.length,
-                    padding: EdgeInsets.symmetric(vertical:10),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return ItemListTile(itemName: state.items[index].name, itemQuantity: state.items[index].quantity, itemMark: state.items[index].mark);
-                      
-                    },
-                  );
-                } else if (state is ItemErrorState) {
-                  return Center(child: Text(state.message));
-                }
-                return Container();
-              },
-            ),
-          ],
+    return Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/bg.jpg"),
+          fit: BoxFit.cover,
+          opacity: 0.6,
+          colorFilter: ColorFilter.mode(Colors.indigo[400]!, BlendMode.dstATop) 
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: (){
-          Navigator.pushNamed(context, '/add');
-        },
-      ),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          drawer: CustomDrawer(),
+          appBar: const CustomeAppBar(
+            title: 'Mon marche domestique',
+            icon: Icons.menu,   
+          ),
+          
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("You have these items in your home:",style: bigTitle,),
+                BlocBuilder<ItemBloc, ItemState>(
+                  builder: (context, state) {
+                    if (state is ItemLoadingState) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (state is ItemLoadedState) {
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: state.items.length,
+                          padding: EdgeInsets.only(left:10, right:10, bottom:50),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return ItemListTile(itemName: state.items[index].name, itemQuantity: state.items[index].quantity, itemMark: state.items[index].mark);
+                            
+                          },
+                        ),
+                      );
+                    } else if (state is ItemErrorState) {
+                      return Center(child: Text(state.message));
+                    }
+                    return Container();
+                  },
+                ),
+              ],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: (){
+              Navigator.pushNamed(context, '/add');
+            },
+          ),
+        ),
+      
     );
   }
 }
