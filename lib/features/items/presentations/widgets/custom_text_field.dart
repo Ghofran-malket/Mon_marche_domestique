@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mon_marche_domestique/core/style.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -9,24 +10,24 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.only(bottom: 20),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [BoxShadow(blurRadius: 5.0, color: Colors.indigo[200]!)],
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          boxShadow: [BoxShadow(blurRadius: 2.0, color: Colors.indigo[600]!)],
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
         child: TextField(
           controller: controller,
-          keyboardType: (labelText == 'quantity') ? TextInputType.number: TextInputType.text,
-          maxLength: (labelText == 'quantity') ? 2 : 20,
+          keyboardType: (labelText == 'Quantity') ? TextInputType.number: TextInputType.text,
+          maxLength: (labelText == 'Quantity') ? 2 : 20,
           showCursor: false,
           decoration: InputDecoration(
               labelText: labelText,
               counterText: "",
               border: InputBorder.none,
-              labelStyle: TextStyle(color: Colors.indigo[200]!),
+              labelStyle: labelStyle,
               constraints: const BoxConstraints(maxHeight: 50)),
         ),
       ),

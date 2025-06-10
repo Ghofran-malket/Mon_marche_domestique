@@ -28,23 +28,23 @@ class _AddItemPageState extends State<AddItemPage> {
       drawer: CustomDrawer(),
       backgroundColor: Colors.white,
       appBar: const CustomeAppBar(
-        title: 'Add new item to your store',
+        title: 'Add a new item to your kitchen',
         icon: Icons.menu,
         color: Colors.indigo,
       ),
       
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text("Add an item to your kitchen",style: bigTitle,),
+              //Text("Add an item to your kitchen",style: bigTitle.copyWith(color: Colors.indigo),),
               SizedBox(height: 20,),
-              CustomTextField(controller: nameController,labelText: 'item name',),
-              CustomTextField(controller: markController,labelText: 'mark',),
-              CustomTextField(controller: quantityController,labelText: 'quantity',),
-              empty ? Text("These fields should be filled..", style:TextStyle(color:Colors.red[400])): Container(),
+              CustomTextField(controller: nameController,labelText: 'Item name',),
+              CustomTextField(controller: markController,labelText: 'Mark',),
+              CustomTextField(controller: quantityController,labelText: 'Quantity',),
+              empty ? Text("These fields should be filled to complete the addition..", style:errorMsg,): Container(),
               CustomPrimaryButton(
                 label:"Add item",
                 onPressed: (){
@@ -66,7 +66,7 @@ class _AddItemPageState extends State<AddItemPage> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 }
