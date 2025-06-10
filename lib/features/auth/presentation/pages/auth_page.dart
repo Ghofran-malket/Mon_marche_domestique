@@ -34,7 +34,8 @@ class _AuthPageState extends State<AuthPage> {
     return  Scaffold(
         appBar: CustomeAppBar(
           title: _isSignUp ? 'Register' : 'Sign In',
-          icon: Icons.arrow_back_ios,   
+          icon: Icons.arrow_back_ios,
+          color: Colors.white,
         ),
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {

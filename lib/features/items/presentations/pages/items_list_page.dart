@@ -41,7 +41,8 @@ class _ItemListPageState extends State<ItemListPage> {
           drawer: CustomDrawer(),
           appBar: const CustomeAppBar(
             title: 'Mon marche domestique',
-            icon: Icons.menu,   
+            icon: Icons.menu,  
+            color: Colors.white, 
           ),
           
           body: Padding(

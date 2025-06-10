@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mon_marche_domestique/common_widgets/custom_drawer.dart';
 import 'package:mon_marche_domestique/core/style.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
@@ -24,10 +25,14 @@ class _AddItemPageState extends State<AddItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
+      backgroundColor: Colors.white,
       appBar: const CustomeAppBar(
-        title: 'Add new item',
-        icon: Icons.arrow_back_ios,   
+        title: 'Add new item to your store',
+        icon: Icons.menu,
+        color: Colors.indigo,
       ),
+      
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
         child: SingleChildScrollView(
