@@ -75,11 +75,23 @@ class _ItemListPageState extends State<ItemListPage> {
               ],
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: (){
-              Navigator.pushNamed(context, '/add');
-            },
+          floatingActionButton: Container(
+            height:60,width:60,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.indigo[600],
+            ),
+            child: InkWell(
+              child: Icon(
+                Icons.add,
+                size: 40,
+                color:Colors.white,
+              ),
+              onTap: (){
+                Navigator.pushNamed(context, '/add');
+              },
+            ),
+            
           ),
         ),
       
