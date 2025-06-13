@@ -9,8 +9,13 @@ class AddItemEvent extends ItemEvent {
   final String name;
   final String mark;
   final String quantity;
+  final DateTime createdAt;
+  final DateTime expirationDate;
+  String image;
+  final String description;
 
-  AddItemEvent({required this.name, required this.mark, required this.quantity});
+  AddItemEvent({required this.name, required this.mark, required this.quantity, required this.createdAt,
+                required this.expirationDate, required this.image, required this.description});
 }
 
 class IncreaseItemsQuantityEvent extends ItemEvent {

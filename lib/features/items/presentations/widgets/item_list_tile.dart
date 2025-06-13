@@ -46,7 +46,9 @@ class ItemListTile extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed:(){
-                            context.read<ItemBloc>().add(IncreaseItemsQuantityEvent(item:Item(name: itemName, mark: itemMark, quantity: itemQuantity)));
+                            context.read<ItemBloc>().add(IncreaseItemsQuantityEvent(item:Item(name: itemName, mark: itemMark, 
+                            quantity: itemQuantity, createdAt: DateTime.now(), expirationDate: DateTime.now(),
+                            image: 'image', description: 'description')));
                           },
                           icon: Icon(Icons.add_circle,color: Colors.indigo[600],)
                         ),
@@ -54,7 +56,9 @@ class ItemListTile extends StatelessWidget {
                         Text("Quantity: $itemQuantity"),
                         IconButton(
                           onPressed:(){
-                            context.read<ItemBloc>().add(MinusItemsQuantityEvent(item:Item(name: itemName, mark: itemMark, quantity: itemQuantity)));
+                            context.read<ItemBloc>().add(MinusItemsQuantityEvent(item:Item(name: itemName, mark: itemMark,
+                            quantity: itemQuantity, createdAt: DateTime.now(), expirationDate: DateTime.now(),
+                            image: 'image', description: 'description')));
                           },
                           icon: Icon(Icons.remove_circle,color: Colors.indigo[600],)
                         ),

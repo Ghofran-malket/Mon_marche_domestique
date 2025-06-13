@@ -46,7 +46,8 @@ class ItemRepositoryImpl implements ItemRepository {
         print('Item quantity updated!');
       } else {
 
-        ItemModel model = ItemModel(name: item.name, mark: item.mark, quantity: item.quantity);
+        ItemModel model = ItemModel(name: item.name, mark: item.mark, quantity: item.quantity,
+                                    createdAt: item.createdAt, expirationDate: item.expirationDate, image: item.image, description: item.description);
         await db.collection('items').add(model.toFirestore());
 
         print('New item added!');

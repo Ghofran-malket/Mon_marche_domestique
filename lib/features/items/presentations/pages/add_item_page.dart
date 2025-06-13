@@ -56,7 +56,8 @@ class _AddItemPageState extends State<AddItemPage> {
                       empty = true;
                     });
                   }else{
-                    context.read<ItemBloc>().add(AddItemEvent(name: name, mark: mark, quantity: quantity));
+                    context.read<ItemBloc>().add(AddItemEvent(name: name, mark: mark, quantity: quantity, createdAt: DateTime.now(), 
+                    expirationDate: DateTime.now(), image: 'image', description: 'description' ));
                     Navigator.pop(context);
                   }
                   
