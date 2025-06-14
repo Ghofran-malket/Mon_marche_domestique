@@ -20,15 +20,18 @@ class CustomTextField extends StatelessWidget {
         ),
         child: TextField(
           controller: controller,
-          keyboardType: (labelText == 'Quantity') ? TextInputType.number: TextInputType.text,
-          maxLength: (labelText == 'Quantity') ? 2 : 20,
+          keyboardType: (labelText == 'Quantity' || labelText == 'Day' || labelText == 'Month' || labelText == 'Year') ? TextInputType.number: TextInputType.text,
+          maxLength: 
+            (labelText == 'Quantity' || labelText == 'Day' || labelText == 'Month') ? 2 : (labelText == 'Year') ? 4 : 20,
+    
           showCursor: false,
           decoration: InputDecoration(
               labelText: labelText,
               counterText: "",
               border: InputBorder.none,
               labelStyle: labelStyle,
-              constraints: const BoxConstraints(maxHeight: 50)),
+              constraints: const BoxConstraints(maxHeight: 50, minWidth: 110)
+          ),
         ),
       ),
     );
