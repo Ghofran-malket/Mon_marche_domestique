@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
+import 'package:mon_marche_domestique/features/items/presentations/pages/item_details_page.dart';
 
 class ItemListTile extends StatelessWidget {
   final String itemName;
@@ -16,7 +17,7 @@ class ItemListTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical:8),
       child: InkWell(
         onTap: (){
-          print("There is $itemName of the $this.itemName");
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemDetailsPage()));
         },
         child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

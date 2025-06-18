@@ -17,3 +17,21 @@ var errorMsg = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.bold,
 );
+
+var itemTitle = TextStyle(
+  color: Colors.indigo,
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+);
+
+var itemDetails = TextStyle(
+  color: Colors.indigo,
+  fontSize: 14,
+  fontWeight: FontWeight.bold,
+);
+
+var itemDetailsBlack = TextStyle(
+  color: Colors.black,
+  fontSize: 14,
+  fontWeight: FontWeight.normal,
+);
