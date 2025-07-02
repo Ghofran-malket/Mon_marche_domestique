@@ -1,4 +1,5 @@
 // lib/data/repositories/item_repository_impl.dart
+import 'package:intl/intl.dart';
 import 'package:mon_marche_domestique/features/items/data/model/item_model.dart';
 import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
 import 'package:mon_marche_domestique/features/items/domain/repository/item_repository.dart';
@@ -122,7 +123,8 @@ class ItemRepositoryImpl implements ItemRepository {
     CollectionReference collection = FirebaseFirestore.instance.collection('items');
     
     for (var item in dataList) {
-      item['created_at'] = DateTime.now();
+      item['createdAt'] = DateTime.now();
+      item['expirationDate'] = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(item['expirationDate']);
       await collection.add(item);
     }
   }
