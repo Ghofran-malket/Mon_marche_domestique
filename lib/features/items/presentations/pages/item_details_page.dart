@@ -81,7 +81,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
               aspectRatio: 2.0,
               enlargeCenterPage: true,
             ),
-            items: widget.item.image.map((image) {
+            items: widget.item.images.map((image) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(

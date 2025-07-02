@@ -11,11 +11,12 @@ class AddItemEvent extends ItemEvent {
   final String quantity;
   final DateTime createdAt;
   final DateTime expirationDate;
-  List image;
+  List images;
   final String description;
+  final String category;
 
   AddItemEvent({required this.name, required this.mark, required this.quantity, required this.createdAt,
-                required this.expirationDate, required this.image, required this.description});
+                required this.expirationDate, required this.images, required this.description, required this.category});
 }
 
 class IncreaseItemsQuantityEvent extends ItemEvent {

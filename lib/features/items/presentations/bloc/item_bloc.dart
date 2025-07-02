@@ -37,7 +37,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
       try {
         await addItem(Item(name: event.name, mark: event.mark, quantity: event.quantity,
-                      createdAt: event.createdAt, expirationDate: event.expirationDate, image: event.image, description: event.description));
+                      createdAt: event.createdAt, expirationDate: event.expirationDate, images: event.images, description: event.description, category: event.category));
         final items = await getItems();
         emit(ItemLoadedState(items));
       } catch (e) {

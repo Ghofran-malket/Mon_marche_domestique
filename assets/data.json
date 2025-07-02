@@ -7,9 +7,10 @@
         "quantity": "2",
         "expirationDate": "2012-02-27 13:27:00",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-        "image": [
+        "images": [
           "https://media.istockphoto.com/id/1498152779/fr/photo/riz-blanc-cuit-traditionnel-dans-la-nourriture-br%C3%A9silienne.jpg?s=612x612&w=0&k=20&c=Dy5MiXPDuTZLCjL2VrIvBl699RFkhZ7YuKIjbxgydOo="
-        ]
+        ],
+        "category": "All"
       },
       {
         "id": "2",
@@ -18,9 +19,10 @@
         "quantity": "6",
         "expirationDate": "2012-02-27 13:27:00",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-        "image": [
+        "images": [
           "https://cdn.chefclub.tools/uploads/recipes/cover-thumbnail/6a871150-190a-41b4-8daf-a40ff500cba1.jpg"
-        ]
+        ],
+        "category": "All"
       },
       {
         "id": "3",
@@ -29,9 +31,10 @@
         "quantity": "2",
         "expirationDate": "2012-02-27 13:27:00",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-        "image": [
+        "images": [
           "https://cdn.britannica.com/75/181375-050-B1219B33/seeds-chia-plant-Mexico-Guatemala-Chia-coating.jpg"
-        ]
+        ],
+        "category": "All"
       },
       {
         "id": "4",
@@ -40,9 +43,10 @@
         "quantity": "3",
         "expirationDate": "2012-02-27 13:27:00",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-        "image": [
+        "images": [
           "https://picniconabroom.com/wp-content/uploads/2021/10/boulgour-turc.jpg"
-        ]
+        ],
+        "category": "All"
       },
       {
         "id": "5",
@@ -51,9 +55,10 @@
         "quantity": "2",
         "expirationDate": "2012-02-27 13:27:00",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-        "image": [
+        "images": [
           "https://img.turkishstylecooking.com/wp-content/uploads/2023/10/hindistan_cevizi_sutlu_kuru_fasulye3-600x450.jpg"
-        ]
+        ],
+        "category": "All"
       }
 
     ]

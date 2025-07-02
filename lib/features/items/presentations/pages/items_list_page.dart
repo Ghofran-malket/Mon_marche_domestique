@@ -67,10 +67,11 @@ class _ItemListPageState extends State<ItemListPage> {
                               name: state.items[index].name,
                               mark: state.items[index].mark,
                               quantity: state.items[index].quantity,
-                              image: state.items[index].image,
+                              images: state.items[index].images,
                               description: state.items[index].description,
                               createdAt: state.items[index].createdAt,
-                              expirationDate: state.items[index].expirationDate
+                              expirationDate: state.items[index].expirationDate,
+                              category: state.items[index].category
 
                             ));
                             
