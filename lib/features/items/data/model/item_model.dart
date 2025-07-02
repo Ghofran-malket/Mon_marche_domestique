@@ -3,7 +3,7 @@ import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
 
 class ItemModel extends Item {
   ItemModel({required String name, required String mark, required String quantity, required DateTime createdAt,
-      required DateTime expirationDate, required String image, required String description})
+      required DateTime expirationDate, required List image, required String description})
       : super(name: name, mark: mark, quantity: quantity, createdAt:  createdAt, expirationDate: expirationDate, image: image, description: description);
 
   factory ItemModel.fromJson(Map<String, dynamic> json) {

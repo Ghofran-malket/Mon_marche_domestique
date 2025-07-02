@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mon_marche_domestique/common_widgets/custom_drawer.dart';
 import 'package:mon_marche_domestique/core/style.dart';
+import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_state.dart';
@@ -62,7 +63,16 @@ class _ItemListPageState extends State<ItemListPage> {
                           padding: EdgeInsets.only(left:10, right:10, bottom:50),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return ItemListTile(itemName: state.items[index].name, itemQuantity: state.items[index].quantity, itemMark: state.items[index].mark);
+                            return ItemListTile(item:Item(
+                              name: state.items[index].name,
+                              mark: state.items[index].mark,
+                              quantity: state.items[index].quantity,
+                              image: state.items[index].image,
+                              description: state.items[index].description,
+                              createdAt: state.items[index].createdAt,
+                              expirationDate: state.items[index].expirationDate
+
+                            ));
                             
                           },
                         ),

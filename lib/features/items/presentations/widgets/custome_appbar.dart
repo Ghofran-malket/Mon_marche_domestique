@@ -10,7 +10,7 @@ class CustomeAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.indigo,
         title: Text(title,style: bigTitle.copyWith(color: color),),
         leading: IconButton(
           icon: Icon(icon,color: color),

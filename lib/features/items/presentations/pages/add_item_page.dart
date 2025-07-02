@@ -36,7 +36,7 @@ class _AddItemPageState extends State<AddItemPage> {
       appBar: const CustomeAppBar(
         title: 'Add a new item to your kitchen',
         icon: Icons.menu,
-        color: Colors.indigo,
+        color: Colors.white,
       ),
       
       body: SingleChildScrollView(
@@ -82,7 +82,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     });
                   }else{
                     context.read<ItemBloc>().add(AddItemEvent(name: name, mark: mark, quantity: quantity, createdAt: DateTime.now(), 
-                    expirationDate: date, image: 'image', description: description ));
+                    expirationDate: date, image: [], description: description ));
                     Navigator.pop(context);
                   }
                   

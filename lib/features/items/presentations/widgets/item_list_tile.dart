@@ -6,10 +6,8 @@ import 'package:mon_marche_domestique/features/items/presentations/bloc/item_eve
 import 'package:mon_marche_domestique/features/items/presentations/pages/item_details_page.dart';
 
 class ItemListTile extends StatelessWidget {
-  final String itemName;
-  final String itemMark;
-  final String itemQuantity;
-  ItemListTile({super.key, required this.itemName, required this.itemMark, required this.itemQuantity});
+  final Item item;
+  ItemListTile({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,7 @@ class ItemListTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical:8),
       child: InkWell(
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemDetailsPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemDetailsPage(item: item)));
         },
         child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -39,27 +37,23 @@ class ItemListTile extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Item $itemName"),
-                        Text("Mark $itemMark")
+                        Text("Item ${item.name}"),
+                        Text("Mark ${item.mark}")
                       ],
                     ),
                     Row(
                       children: [
                         IconButton(
                           onPressed:(){
-                            context.read<ItemBloc>().add(IncreaseItemsQuantityEvent(item:Item(name: itemName, mark: itemMark, 
-                            quantity: itemQuantity, createdAt: DateTime.now(), expirationDate: DateTime.now(),
-                            image: 'image', description: 'description')));
+                            context.read<ItemBloc>().add(IncreaseItemsQuantityEvent(item:item));
                           },
                           icon: Icon(Icons.add_circle,color: Colors.indigo[600],)
                         ),
                         
-                        Text("Quantity: $itemQuantity"),
+                        Text("Quantity: ${item.quantity}"),
                         IconButton(
                           onPressed:(){
-                            context.read<ItemBloc>().add(MinusItemsQuantityEvent(item:Item(name: itemName, mark: itemMark,
-                            quantity: itemQuantity, createdAt: DateTime.now(), expirationDate: DateTime.now(),
-                            image: 'image', description: 'description')));
+                            context.read<ItemBloc>().add(MinusItemsQuantityEvent(item: item));
                           },
                           icon: Icon(Icons.remove_circle,color: Colors.indigo[600],)
                         ),

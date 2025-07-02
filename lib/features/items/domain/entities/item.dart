@@ -4,7 +4,7 @@ class Item {
   String quantity;
   final DateTime createdAt;
   final DateTime expirationDate;
-  String image;
+  List image;
   final String description;
 
   Item({required this.name, required this.mark, required this.quantity, 
