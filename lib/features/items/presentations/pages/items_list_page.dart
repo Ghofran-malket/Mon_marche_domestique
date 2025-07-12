@@ -18,6 +18,9 @@ class ItemListPage extends StatefulWidget {
 
 class _ItemListPageState extends State<ItemListPage> {
 
+  final List<String> categories = ['All', 'Fruits', 'Vegetables', 'Drinks'];
+  String selectedCategory = 'All';
+
   @override
   void initState() {
     
@@ -27,8 +30,6 @@ class _ItemListPageState extends State<ItemListPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      width: 100,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/bg.jpg"),
@@ -51,7 +52,31 @@ class _ItemListPageState extends State<ItemListPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("You have these items in your home:",style: bigTitle,),
+                SizedBox(
+                  height: 60, // give some height for horizontal list
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      String category = categories[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: ChoiceChip(
+                          label: Text(category),
+                          selected: selectedCategory == category,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              selectedCategory = category;
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: 20),
+               
+                // Text("You have these items in your home:",style: bigTitle,),
                 BlocBuilder<ItemBloc, ItemState>(
                   builder: (context, state) {
                     if (state is ItemLoadingState) {
@@ -63,17 +88,21 @@ class _ItemListPageState extends State<ItemListPage> {
                           padding: EdgeInsets.only(left:10, right:10, bottom:50),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return ItemListTile(item:Item(
-                              name: state.items[index].name,
-                              mark: state.items[index].mark,
-                              quantity: state.items[index].quantity,
-                              images: state.items[index].images,
-                              description: state.items[index].description,
-                              createdAt: state.items[index].createdAt,
-                              expirationDate: state.items[index].expirationDate,
-                              category: state.items[index].category
-
-                            ));
+                            
+                            if(state.items[index].category == selectedCategory || selectedCategory == "All"){
+                              return ItemListTile(item:Item(
+                                name: state.items[index].name,
+                                mark: state.items[index].mark,
+                                quantity: state.items[index].quantity,
+                                images: state.items[index].images,
+                                description: state.items[index].description,
+                                createdAt: state.items[index].createdAt,
+                                expirationDate: state.items[index].expirationDate,
+                                category: state.items[index].category
+                              ));
+                            }
+                            else {return Container();}
+                            
                             
                           },
                         ),
