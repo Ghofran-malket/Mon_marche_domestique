@@ -12,6 +12,9 @@ import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_bloc.
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_event.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/bloc/auth_state.dart';
 import 'package:mon_marche_domestique/features/auth/presentation/pages/auth_page.dart';
+import 'package:mon_marche_domestique/features/categories/data/repository/category_repository_impl.dart';
+import 'package:mon_marche_domestique/features/categories/domain/use_cases/get_categories.dart';
+import 'package:mon_marche_domestique/features/categories/presentations/bloc/category_bloc.dart';
 import 'package:mon_marche_domestique/features/items/domain/use_cases/upload_json_file.dart';
 import 'package:mon_marche_domestique/features/items/presentations/pages/items_list_page.dart';
 import 'package:mon_marche_domestique/features/payment/presentations/bloc/payment_bloc.dart';
@@ -64,7 +67,11 @@ class MyApp extends StatelessWidget {
               googleSignIn: GoogleSignIn(AuthRepositoryImpl()))
             ..add(AuthStateChangeEvent()),
         ),
-        BlocProvider(create: (context) => PaymentBloc())
+        BlocProvider(create: (context) => PaymentBloc()),
+        BlocProvider(
+          create: (context) => CategoryBloc(
+              getCategories: GetCategories(CategoryRepositoryImpl())),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Clean Architecture',

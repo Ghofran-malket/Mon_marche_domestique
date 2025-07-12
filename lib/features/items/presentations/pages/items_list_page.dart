@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mon_marche_domestique/common_widgets/custom_drawer.dart';
 import 'package:mon_marche_domestique/core/style.dart';
+import 'package:mon_marche_domestique/features/categories/presentations/bloc/category_bloc.dart';
+import 'package:mon_marche_domestique/features/categories/presentations/bloc/category_event.dart';
+import 'package:mon_marche_domestique/features/categories/presentations/bloc/category_state.dart';
 import 'package:mon_marche_domestique/features/items/domain/entities/item.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_event.dart';
@@ -18,7 +21,6 @@ class ItemListPage extends StatefulWidget {
 
 class _ItemListPageState extends State<ItemListPage> {
 
-  final List<String> categories = ['All', 'Fruits', 'Vegetables', 'Drinks'];
   String selectedCategory = 'All';
 
   @override
@@ -26,6 +28,7 @@ class _ItemListPageState extends State<ItemListPage> {
     
     super.initState();
     context.read<ItemBloc>().add(GetItemListEvent());
+    context.read<CategoryBloc>().add(GetCategoriesListEvent());
   }
   @override
   Widget build(BuildContext context) {
@@ -53,27 +56,38 @@ class _ItemListPageState extends State<ItemListPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 60, // give some height for horizontal list
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                    itemBuilder: (context, index) {
-                      String category = categories[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ChoiceChip(
-                          label: Text(category),
-                          selected: selectedCategory == category,
-                          onSelected: (bool selected) {
-                            setState(() {
-                              selectedCategory = category;
-                            });
-                          },
-                        ),
-                      );
-                    },
+                  height: 60,
+                  child: BlocBuilder<CategoryBloc, CategoryState>(
+                    builder: (context, state) {
+                      if (state is CategoryLoadingState) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is CategoryLoadedState) {
+                        return ListView.builder(
+                            itemCount: state.categories.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: ChoiceChip(
+                                  label: Text(state.categories[index].name),
+                                  selected: selectedCategory == state.categories[index].name,
+                                  onSelected: (bool selected) {
+                                    setState(() {
+                                      selectedCategory = state.categories[index].name;
+                                    });
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                      } else if (state is CategoryErrorState) {
+                        return Center(child: Text(state.message));
+                      }
+                      return Container();
+                    }
                   ),
                 ),
+                
                 SizedBox(height: 20),
                
                 // Text("You have these items in your home:",style: bigTitle,),
