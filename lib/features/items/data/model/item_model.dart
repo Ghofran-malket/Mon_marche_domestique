@@ -15,7 +15,7 @@ class ItemModel extends Item {
   }
   
   Map<String, dynamic> toFirestore() {
-    return {'name': name, 'mark': mark, 'quantity': quantity, 'createdAt': createdAt, 'expirationDate': expirationDate, 'images': images, 'description': description, 'cqtegory': category};
+    return {'name': name, 'mark': mark, 'quantity': quantity, 'createdAt': createdAt, 'expirationDate': expirationDate, 'images': images, 'description': description, 'category': category};
   }
 
   factory ItemModel.fromFirestore(Map<String, dynamic> firestore) {

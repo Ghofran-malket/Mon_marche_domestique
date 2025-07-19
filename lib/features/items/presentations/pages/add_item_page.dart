@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:mon_marche_domestique/common_widgets/custom_drawer.dart';
 import 'package:mon_marche_domestique/core/style.dart';
 import 'package:mon_marche_domestique/features/items/presentations/bloc/item_bloc.dart';
@@ -22,17 +23,31 @@ class _AddItemPageState extends State<AddItemPage> {
 
   final TextEditingController descriptionController = TextEditingController();
 
-  final TextEditingController dayController = TextEditingController();
-  final TextEditingController monthController = TextEditingController();
-  final TextEditingController yearController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
 
   bool empty = false;
+  DateTime? _selectedDate;
+
+  Future<void> _pickDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        _selectedDate = picked;
+        dateController.text = DateFormat('dd/MM/yyyy').format(picked);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF1F3F6),
       drawer: CustomDrawer(),
-      backgroundColor: Colors.white,
       appBar: const CustomeAppBar(
         title: 'Add a new item to your kitchen',
         icon: Icons.menu,
@@ -45,27 +60,19 @@ class _AddItemPageState extends State<AddItemPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              //Text("Add an item to your kitchen",style: bigTitle.copyWith(color: Colors.indigo),),
+              Text("Add an item to your kitchen",style: bigTitle.copyWith(color: Colors.indigo),),
               SizedBox(height: 20,),
-              CustomTextField(controller: nameController,labelText: 'Item name',),
-              CustomTextField(controller: markController,labelText: 'Mark',),
-              CustomTextField(controller: quantityController,labelText: 'Quantity',),
-              CustomTextField(controller: descriptionController,labelText: 'Description',),
+            
+              CustomTextField(controller: nameController,labelText: 'Item name', icon: Icons.shopping_cart_outlined),
+              CustomTextField(controller: markController,labelText: 'Mark', icon: Icons.local_offer_outlined),
+              CustomTextField(controller: quantityController,labelText: 'Quantity', icon: Icons.view_module),
+              CustomTextField(controller: descriptionController,labelText: 'Description', icon: Icons.description),
 
               Text("The expiration date", style: labelStyle.copyWith(color: Colors.indigo, fontWeight: FontWeight.bold),),
               SizedBox(height: 5,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(child: CustomTextField(controller: dayController,labelText: 'Day',)),
-                  Expanded(child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: CustomTextField(controller: monthController,labelText: 'Month',),
-                  )),
-                  Expanded(child: CustomTextField(controller: yearController,labelText: 'Year',)),
+              CustomTextField(controller: dateController,labelText: 'The expiration date', icon: Icons.date_range_outlined, onTap: ()=> _pickDate(context),),
 
-                ],
-              ),
+              
               
               empty ? Text("These fields should be filled to complete the addition..", style:errorMsg,): Container(),
               CustomPrimaryButton(
@@ -75,7 +82,7 @@ class _AddItemPageState extends State<AddItemPage> {
                   final mark = markController.text;
                   final quantity = quantityController.text;
                   final description = descriptionController.text;
-                  final date = DateTime(int.parse(yearController.text), int.parse(monthController.text), int.parse(dayController.text));
+                  final date = DateFormat('dd/MM/yyyy').parse(dateController.text);
                   if (name == "" || mark == "" || quantity == "" || description == ""){
                     setState(() {
                       empty = true;
@@ -95,4 +102,5 @@ class _AddItemPageState extends State<AddItemPage> {
       
     );
   }
+
 }

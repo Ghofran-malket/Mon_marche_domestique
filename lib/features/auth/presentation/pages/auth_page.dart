@@ -71,8 +71,8 @@ class _AuthPageState extends State<AuthPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                    
-                    CustomTextField(controller: emailController, labelText: 'email'),
-                    CustomTextField(controller: passwordController, labelText: 'password'),
+                    CustomTextField(controller: emailController, labelText: 'email', icon: Icons.email_outlined,),
+                    CustomTextField(controller: passwordController, labelText: 'password', icon: Icons.password,),
                     // CustomPrimaryButton(
                     //   label:"Check",
                     //   onPressed: (){
